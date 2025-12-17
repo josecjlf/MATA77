@@ -1,0 +1,1 @@
+Some questions from my Functional Programming subject(MATA77). We were using Racket.

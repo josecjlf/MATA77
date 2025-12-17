@@ -1,0 +1,35 @@
+#lang racket
+
+(define (conta-se l #:teste [teste number?])
+  (cond
+    [(null? l) 0]
+    [(teste (first l)) (+ 1 (conta-se (rest l) #:teste teste))]
+    [else (conta-se (rest l) #:teste teste)]))
+
+(conta-se '(1 2 a 3))
+(conta-se '(1 2 3 4) #:teste even?)
+
+(define (remova-cond alvo l
+         #:test  [test equal?]
+         #:chave [chave identity])
+  (cond
+    [(null? l) '()]
+    [(test (chave (first l)) alvo)
+     (remova-cond alvo (rest l) #:test test #:chave chave)]
+    [else
+     (cons (first l)
+           (remova-cond alvo (rest l) #:test test #:chave chave))]))
+
+(remova-cond 3 '(1 2 3 4 3 5))
+
+(define (map-dobro-enc l)
+  (define resultados (map (λ(x) (* 2 x)) l))
+  (lambda (p)
+    (cond
+      [(eq? p 'r) resultados]
+      [(eq? p 't) (length resultados)]
+      [(and (integer? p) (>= p 0) (< p (length resultados)))
+       (list-ref resultados p)]
+      [else (error "entrada inválida: " p)])))
+
+(define f (map-dobro-enc '(1 2 3 4)))

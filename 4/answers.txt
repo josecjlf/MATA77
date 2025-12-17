@@ -1,0 +1,61 @@
+#lang racket
+
+(define (somav1 l)
+  (somav2 l 0))
+
+
+(define (somav2 l a)
+  (cond
+    [(null? l) a]
+    [(odd? (first l)) (somav2 (rest l) (+ (first l) a))]
+    [else (somav2 (rest l) a)]))
+
+
+(define (mulv1 [l empty])
+(mulv2 l 1))
+
+(define (mulv2 l a)
+  (cond
+    [(null? l) a]
+    [else (* (first l) (mulv2 (rest l) a))]))
+
+
+(define (substitui* t s l)
+  (cond
+    [(null? l) '()]
+    [(list? (first l)) (cons (substitui* t s (first l)) (substitui* t s (rest l)))]
+    [(eqv? (first l) t) (cons s (substitui* t s (rest l)))]
+    [else (cons (first l)(substitui* t s (rest l)))]))
+
+
+(define (inverte* l)
+  (cond
+    [(null? l) '()]
+    [(list? (first l)) (append (inverte* (rest l)) (cons (inverte* (first l)) '()))]
+    [else (append (inverte* (rest l)) (cons (first l) '()))]))
+
+(let [(a 3)
+      (b 4)]
+      (+ a (* a b))) ;15
+
+(let* [(a 5)
+      (b (+ a 2)) 
+      (c (* b 3))]
+      (list a b c))
+
+      
+(define (rmembro* a l)
+  (cond
+    [(null? l) '()]
+    [(list? (first l))
+     (let ([nova (rmembro* a (first l))])
+       (if (not (equal? nova (first l)))
+           (cons nova (rest l))
+           (cons (first l) (rmembro* a (rest l)))))]
+    [(equal? (first l) a) (rest l)]
+    [else (cons (first l) (rmembro* a (rest l)))]))
+
+
+
+
+

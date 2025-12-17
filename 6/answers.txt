@@ -1,0 +1,104 @@
+#lang racket
+
+;questao 1
+((lambda (a b . resto)
+  (length resto)) 1 2 3)
+
+
+;questao 2
+
+((lambda (a b . resto) (apply + resto)) 10 20 1 2 3)
+
+
+;questao 3
+((lambda rest (length rest)) 1 2 3 4 5)
+
+
+;questao 4
+
+(define (remove3 l)
+  (cond
+    [(null? l) '()]
+    [(= 3 (first l)) (remove3 (rest l))]
+    [else
+     (cons (first l) (remove3 (rest l)))]))
+
+(remove3 '(1 2 3 4 5 6))
+
+
+;questao 5
+(define (remove20* l crit)
+  (cond
+    [(null? l) '()]
+    [(list? (first l))
+     (cons (remove20* (first l) crit)
+           (remove20* (rest l) crit))]
+    [(crit (first l))
+     (remove20* (rest l) crit)]
+    [else
+     (cons (first l)
+           (remove20* (rest l) crit))]))
+
+(define div20? (lambda (x) (= 0 (remainder x 20))))
+
+
+(remove20* '(10 20 30 40 50) div20?)
+
+;questao 6
+(define (mul3* l)
+  (cond
+    [(null? l) '()]
+    [(list? (first l))
+     (cons (mul3* (first l))
+           (mul3* (rest l)))]
+    [(= 0 (remainder (first l) 3))
+     (mul3* (rest l))]
+    [else
+     (cons (first l)
+           (mul3* (rest l)))]))
+
+(mul3* '(3 4 6 9 10))
+
+
+
+
+;questao 7
+(map (lambda (x) (* x 3)) '(1 2 3 4))
+
+;questao 8
+
+(map (lambda (produto)
+       (list (first produto) (* 0.80 (second produto))))
+     '(("banana" 3) ("maçã" 5) ("laranja" 4)))
+
+;questao 9
+(andmap (lambda (x) ( = (string-length x) 4)) '("gato" "rato" "pato"))
+
+
+;questao 10
+(build-list 5 (lambda (i) i))
+
+;questao 11
+
+
+(build-list 5 (lambda (i) (* i i)))
+
+;questao 12
+(define (maiorq10 x)
+  (> x 10))
+ (filter maiorq10 '(3 12 8 20 5))
+
+
+;questao 13
+(define (ehpar? x)
+  (= 0 (remainder x 2)))
+
+(filter ehpar? '(1 2 3 4 5 6))
+
+
+; questao 14
+(sort '(5 1 8 3 2) <)
+
+;questao 15
+(sort '("sol" "tartaruga" "lua" "cavalo")
+      (lambda (a b)(< (string-length a) (string-length b))))

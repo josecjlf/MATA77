@@ -1,0 +1,47 @@
+#lang racket
+
+;Q1
+(define (media . numeros)
+  (/ (apply + numeros) (length numeros)))
+
+(media 10 20 30 40)
+
+;Q2
+(define (filtrar-pares . numeros)
+  (filter even? numeros))
+
+(filtrar-pares 1 2 3 4 5 6)
+
+;Q3
+(define (contar-elementos . numeros)
+  (length numeros))
+
+(contar-elementos 10 20 30)
+
+;Q4
+(define (soma-aninhada . listas)
+  (apply + (apply append listas)))
+
+(soma-aninhada '(1 2) '(3 4) '(5))
+
+;Q5
+(define (produto . numeros)
+  (apply * numeros))
+
+(produto 2 3 4)
+
+;Q6
+(define/contract soma2
+  (-> number? number? number?)
+  (lambda (x y)
+    (+ x y)))
+
+(soma2 3 5)
+
+;Q7
+(define/contract eh-par?
+  (-> number? boolean?)
+  (lambda (x)
+    (even? x)))
+
+(eh-par? 4)

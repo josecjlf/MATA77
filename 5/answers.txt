@@ -1,0 +1,61 @@
+#lang racket
+(require 2htdp/image)
+(require rackunit)
+
+(define (cadastrar-tarefa #:titulo titulo 
+                          #:descricao descricao 
+                          #:status [status "pendente"])
+  (string-append "tarefa cadastrada com sucesso! "
+                 "titulo: " titulo " "
+                 "descrição: " descricao " "
+                 "status: " status))
+
+
+(define (cadastrar-produto #:nome nome 
+                           #:preco [preco 0.0] 
+                           #:categoria [categoria "nao especificada"])
+  (string-append "produto cadastrado com sucesso! "
+                 "nome: " nome " "
+                 "preco: " (number->string preco) " "
+                 "categoria: " categoria))
+
+(struct vetor2D (x y) #:transparent)
+
+(define (soma-vetores v1 v2)
+  (vetor2D (+ (vetor2D-x v1) (vetor2D-x v2))
+           (+ (vetor2D-y v1) (vetor2D-y v2))))
+
+(define (subtrai-vetores v1 v2)
+  (vetor2D (- (vetor2D-x v1) (vetor2D-x v2))
+           (- (vetor2D-y v1) (vetor2D-y v2))))
+
+(define (multiplica-escalar v escalar)
+  (vetor2D (* escalar (vetor2D-x v))
+           (* escalar (vetor2D-y v))))
+
+
+(define (criar-imagem)
+  (beside
+   (circle 50 "solid" "red")      
+   (rectangle 100 50 "solid" "blue"))) 
+
+(define (multiplicar a b)
+  (* a b))
+
+(check-equal? (multiplicar 2 3) 6)
+(check-equal? (multiplicar -2 4) -8)
+
+(define (validar-id id)
+  (cond
+    [(not (string? id))
+     (error 'validar-id
+            (format "ID invalido: Esperava uma string com pelo menos 5 caracteres, mas recebi ~a" id))]
+    [(< (string-length id) 5)
+     (error 'validar-id
+            (format "ID inválido: Esperava uma string com pelo menos 5 caracteres, mas recebi ~a" id))]
+    [else id]))
+
+;(validar-id "abcd")
+;(validar-id "abcde")
+;(validar-id 33)
+
